@@ -67,3 +67,19 @@
 - Assist-режим: окно допуска ±160–200 мс и громкий клик-метроном.
 - Если ритм не заходит: отключить ограничение стрельбы по такту, оставить ×2 урон за попадание «в такт»; хаос растёт от промахов.
 - Анти-срыв: если `chaos_meter > 80` держится >5 секунд — авто-Order Burst для возвращения игрока в «флоу».
+
+## Unity prototype structure
+- `Assets/Scripts/Game/BeatClock.cs` — глобальный ритм, событие OnBeat и окно допуска.
+- `Assets/Scripts/Game/ChaosMeter.cs` — хаос-метр с авто Order Burst при перегреве.
+- `Assets/Scripts/Game/OrderCombo.cs` — комбо-логика и Order Burst с замедлением.
+- `Assets/Scripts/Combat/PlayerWeapon.cs` — проверка окна допуска, штраф хаоса, пули.
+- `Assets/Scripts/Enemy/ChaosSpawner.cs` — базовый план волн + ускорение от хаоса.
+- `Assets/Scripts/Enemy/WavePatternLoader.cs` — парсинг JSON волн (формат из примера).
+- `Assets/Scripts/UI/*` — метроном-кольцо, хаос-бар, комбо-счётчик, меню.
+
+### Как быстро показать прототип
+1. Создайте сцену `Arena` с плоской ареной, Player (CharacterController + PlayerMover + PlayerWeapon) и основными менеджерами (BeatClock, ChaosMeter, OrderCombo, RhythmDifficultyScaler).
+2. Подключите UI Canvas с `MetronomeRing`, `ChaosBar`, `ComboDisplay` и всплывающим текстом.
+3. Добавьте `ChaosSpawner` + `WavePatternLoader` и заполните JSON из раздела «Заготовки». Привяжите префабы врагов.
+4. Для ассист-режима подключите `GameStateController` и переключатель Toggle.
+5. Соберите билды для Windows и WebGL через стандартный Build Settings.
